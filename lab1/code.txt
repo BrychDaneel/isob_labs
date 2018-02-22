@@ -1,0 +1,91 @@
+def encrypt(s, key):
+    anum = ord('z') - ord('a') + 1
+    res = []
+    for c  in s:
+        if c > 'z' or c < 'a':
+            res.append(c)
+            continue
+
+        c_num = ord(c) - ord('a')
+        new_c_num = (c_num + key + anum) % anum
+        new_c = chr(new_c_num + ord('a'))
+        res.append(new_c)
+    return ''.join(res)
+
+def dencrypt(s, key):
+    anum = ord('z') - ord('a') + 1
+    res = []
+    for c  in s:
+        if c > 'z' or c < 'a':
+            res.append(c)
+            continue
+
+        c_num = ord(c) - ord('a')
+        new_c_num = (c_num - key + anum) % anum
+        new_c = chr(new_c_num + ord('a'))
+        res.append(new_c)
+    return ''.join(res)
+
+def encrypt(s, key):
+    anum = ord('z') - ord('a') + 1
+    res = []
+    i = 0
+    for c  in s:
+        if c > 'z' or c < 'a':
+            res.append(c)
+            continue
+
+        c_num = ord(c) - ord('a')
+        delta = ord(key[i % len(key)]) - ord('a')
+        new_c_num = (c_num + delta + anum) % anum
+        new_c = chr(new_c_num + ord('a'))
+        res.append(new_c)
+        i += 1
+    return ''.join(res)
+
+def dencrypt(s, key):
+    anum = ord('z') - ord('a') + 1
+    res = []
+    i = 0
+    for c  in s:
+        if c > 'z' or c < 'a':
+            res.append(c)
+            continue
+
+        c_num = ord(c) - ord('a')
+        delta = ord(key[i % len(key)]) - ord('a')
+        new_c_num = (c_num - delta + anum) % anum
+        new_c = chr(new_c_num + ord('a'))
+        res.append(new_c)
+        i += 1
+    return ''.join(res)
+
+import cesar
+import visin
+import argparse
+import sys
+
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-v', action='store_const', const=True)
+    ap.add_argument('-d', action='store_const', const=True)
+    ap.add_argument('key')
+    args = ap.parse_args()
+
+    if args.v:
+        module = visin
+        key = args.key
+    else:
+        module = cesar
+        key = int(args.key)
+
+    if args.d:
+        fun = module.dencrypt
+    else:
+        fun = module.encrypt
+
+    inp = sys.stdin.read()
+    out = fun(inp, key)
+    print(out)
+ 
