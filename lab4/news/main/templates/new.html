@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} {{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<div class="details">
+
+<h1>{{ new.title }}</h1>
+<img src="{{ new.image.url }}">
+<div class="text">{{ new.text|linebreaks }}</div>
+<p class="time">{{ new.pubtime }}</p>
+
+{% if perms.main.change_news %}
+<a href={% url 'new.update' pk=new.pk %}>Обновить</a>
+{% endif %}
+
+{% if perms.main.delete_news %}
+<a href={% url 'new.delete' pk=new.pk %}>Удалить</a>
+{% endif %}
+</div>
+
+
+<div class="comments">
+<h2>Коментарии</h2>
+{% for comment in coments %}
+
+<div class="comment">
+<p class="name">{{ comment.user.get_username }}</p>
+<p class="text">{{ comment.text }}</p>
+<p class="time">{{ comment.pubtime }}</p>
+
+{% if perms.main.delete_coments %}
+<a href={% url 'coment.delete' pk=comment.pk %}>Удалить коментарий</a>
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+
+{% if perms.main.add_coments %}
+<form action="" method="post">
+{% csrf_token %}
+{{ coment_form.as_p }}
+<input type="submit" value="Коментировать">
+</form>
+{% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+
+from socket import socket, AF_INET, SOCK_STREAM
+
+host = 'localhost'
+port = 27015
+addr = (host,port)
+
+cnt = 0
+
+
+
+while True:
+
+    tcp_socket = socket(AF_INET, SOCK_STREAM)
+    tcp_socket.connect(addr)
+    #print('connected')
+
+from socket import socket, AF_INET, SOCK_STREAM
+from time import sleep
+
+host = 'localhost'
+port = 27015
+addr = (host,port)
+
+i = 0
+while True:
+    i = i + 1
+    tcp_socket = socket(AF_INET, SOCK_STREAM)
+    tcp_socket.connect(addr)
+    print('Send: ' + "Some confidential info #{}".format(i))
+    tcp_socket.send("Some confidential info #{}".format(i).encode())
+    data = tcp_socket.recv(1024)
+    print('Recv: ' + data.decode())
+    tcp_socket.close()
+    sleep(5)
+from socket import socket, AF_INET, SOCK_STREAM
+from threading import Thread
+
+
+def proc(conn):
+    while True:
+        data = conn.recv(1024)
+        if not data:
+            break
+        print(data.decode())
+        conn.send(data)
+    conn.close()
+
+
+host = 'localhost'
+port = 27015
+addr = (host,port)
+
+tcp_socket = socket(AF_INET, SOCK_STREAM)
+tcp_socket.bind(addr)
+
+tcp_socket.listen(100)
+
+
+while True:
+    conn, addr = tcp_socket.accept()
+    th = Thread(target=proc, args=(conn,))
+    th.start()
+
+tcp_socket.close()
+import subprocess
+import time
+
+for i in range(100):
+    subprocess.Popen(["python3", "attack.py"])
+
+
+time.sleep(60)

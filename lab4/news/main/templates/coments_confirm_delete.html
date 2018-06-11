@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %} Delete::Comment {% endblock %}
+
+
+{% block content %}
+
+<p>Подтверждаете удаление коментария {{ coment }} :</p>
+<p>{{ coment.text }} ?</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Удалить" />
+</form>
+
+{% endblock %}

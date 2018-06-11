@@ -1,0 +1,85 @@
+
+<!doctype html>
+
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>  </title>
+        <link href="/static/css/styles.css" rel="stylesheet" media="all" />
+    </head>
+        <body>
+            <div class="pageWrapper">
+
+            <header>
+            <img src="/static/images/logo.png" class="logo" alt="logo">
+
+<h1><a href="/">Новости</a></h1>
+
+<div class="login">
+
+<span>super</span>
+<a href="/logout/">Выход</a>
+
+
+</div>
+
+            </header>
+
+            <main>
+            
+
+<form action="http://127.0.0.1:8000/new/3/update/" method="post" enctype="multipart/form-data">
+
+<p><label for="id_title">Заголовок:</label> <input type="text" name="title" value="Рубль сдал к доллару" required id="id_title" maxlength="50" /></p>
+<p><label for="id_image">Изображение:</label> На данный момент: <a href="/media/news/2018/04/17/23dd4c9a-bbd8-4fa4-aca1-3a20d8c604f7.jpg">news/2018/04/17/23dd4c9a-bbd8-4fa4-aca1-3a20d8c604f7.jpg</a><br />
+Изменить:
+<input type="file" name="image" id="id_image" /></p>
+<p><label for="id_short_text">Краткое описание:</label> <textarea name="short_text" required id="id_short_text" rows="10" cols="40">
+На торгах 16 мая рубль сдал к доллару. За один доллар дают 2.07.</textarea></p>
+<p><label for="id_text">Тескт:</label> <textarea name="text" required id="id_text" rows="10" cols="40">
+На торгах 16 мая рубль сдал к доллару. За один доллар дают 2.07. Финансисты пояснили, что причиной резкого скачка являются недавний пакет санкций.</textarea></p>
+
+
+<input type="submit" value="обновить">
+
+</form>
+
+
+            </main>
+
+
+            <footer>
+            <div class="info">
+
+
+<figure class="logo">
+<img src="/static/images/logo.png">
+<figcaption class="copy">
+&copy; 2018 ЗАО "Крутая компания"
+</figcaption>
+</figure>
+
+<small>
+Свидетельство о регистрации №123456789 от 01.01.2000г.<br>
+Лицензия на розничную торговлю №00000/00000 от 01.01.2000г.<br>
+Дата включения в торговый реестр – 01.01.2000г.
+</small>
+
+<div class="contact">
+
+<address>
+emal: mega@cool.net<br>
+MTC: +375 11 111 11 11<br>
+VECOME: +375 22 222 22 22<br>
+LIFE: +375 33 333 33 33
+</address>
+
+</div>
+
+</div>
+
+            </footer>
+
+            </div>
+        </body>
+</html>

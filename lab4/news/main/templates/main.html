@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} Главная {% endblock %}
+
+
+{% block content %}
+
+{% for new in news %}
+
+<div class="new">
+    <h2>{{ new.title }}</h2>
+    <img src="{{ new.image.url }}">
+    <div class="shorttext"> {{ new.short_text|linebreaks }} </div>
+    <p class="time">{{ new.pubtime }}</p>
+    <a href={% url 'detail' pk=new.pk %}>Подробнее</a>
+
+    {% if perms.main.change_news %}
+    <a href={% url 'new.update' pk=new.pk %}>Обновить</a>
+    {% endif %}
+
+    {% if perms.main.delete_news %}
+    <a href={% url 'new.delete' pk=new.pk %}>Удалить</a>
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+{% if perms.main.add_news %}
+<a href={% url 'new.add' %}>Добавить новость<a>
+{% endif %}
+
+{% endblock %}

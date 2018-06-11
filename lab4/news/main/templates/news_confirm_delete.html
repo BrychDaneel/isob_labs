@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} Delete::{{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Подтверждаете удаление новости "{{ object }}"?</p>
+    <input type="submit" value="Удалить" />
+</form>
+
+{% endblock %}

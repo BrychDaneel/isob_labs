@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link href="/static/css/styles.css" rel="stylesheet" media="all" />
+    </head>
+        <body>
+            <div class="pageWrapper">
+
+            <header>
+            {% include "components/header.html" %}
+            </header>
+
+            <main>
+            {% block content %}{% endblock %}
+            </main>
+
+
+            <footer>
+            {% include "components/footer.html" %}
+            </footer>
+
+            </div>
+        </body>
+</html>

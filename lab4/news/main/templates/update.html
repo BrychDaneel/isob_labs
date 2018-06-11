@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} {{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+
+{{ form.as_p }}
+
+{% csrf_token %}
+
+<input type="submit" value="обновить">
+
+</form>
+
+{% endblock %}

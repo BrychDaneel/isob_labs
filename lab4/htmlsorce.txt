@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %} Delete::{{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Подтверждаете удаление новости "{{ object }}"?</p>
+    <input type="submit" value="Удалить" />
+</form>
+
+{% endblock %}
+{% extends "base.html" %}
+
+{% block title %} Delete::Comment {% endblock %}
+
+
+{% block content %}
+
+<p>Подтверждаете удаление коментария {{ coment }} :</p>
+<p>{{ coment.text }} ?</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Удалить" />
+</form>
+
+{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Регистрация">
+</form>
+
+{% endblock %}
+{% extends "base.html" %}
+
+{% block title %} Подтвердение почты {% endblock %}
+
+
+{% block content %}
+
+{%if valid %}
+подтвержденно
+{% else %}
+неверный токен
+{% endif %}
+
+{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Вход">
+</form>
+
+{% endblock %}
+{% extends "base.html" %}
+
+{% block title %} {{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+
+{{ form.as_p }}
+
+{% csrf_token %}
+
+<input type="submit" value="обновить">
+
+</form>
+
+{% endblock %}
+{% extends "base.html" %}
+
+{% block title %} Пользователи {% endblock %}
+
+{% block content %}
+
+{% for user in users %}
+    <p>{{ user }}</p>
+{% endfor %}
+
+
+{% endblock %}
+
+{% extends "base.html" %}
+
+{% block title %} Главная {% endblock %}
+
+
+{% block content %}
+
+{% for new in news %}
+
+<div class="new">
+    <h2>{{ new.title }}</h2>
+    <img src="{{ new.image.url }}">
+    <div class="shorttext"> {{ new.short_text|linebreaks }} </div>
+    <p class="time">{{ new.pubtime }}</p>
+    <a href={% url 'detail' pk=new.pk %}>Подробнее</a>
+
+    {% if perms.main.change_news %}
+    <a href={% url 'new.update' pk=new.pk %}>Обновить</a>
+    {% endif %}
+
+    {% if perms.main.delete_news %}
+    <a href={% url 'new.delete' pk=new.pk %}>Удалить</a>
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+{% if perms.main.add_news %}
+<a href={% url 'new.add' %}>Добавить новость<a>
+{% endif %}
+
+{% endblock %}
+<!doctype html>
+
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link href="/static/css/styles.css" rel="stylesheet" media="all" />
+    </head>
+        <body>
+            <div class="pageWrapper">
+
+            <header>
+            {% include "components/header.html" %}
+            </header>
+
+            <main>
+            {% block content %}{% endblock %}
+            </main>
+
+
+            <footer>
+            {% include "components/footer.html" %}
+            </footer>
+
+            </div>
+        </body>
+</html>
+{% extends "base.html" %}
+
+{% block title %} {{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<div class="details">
+
+<h1>{{ new.title }}</h1>
+<img src="{{ new.image.url }}">
+<div class="text">{{ new.text|linebreaks }}</div>
+<p class="time">{{ new.pubtime }}</p>
+
+{% if perms.main.change_news %}
+<a href={% url 'new.update' pk=new.pk %}>Обновить</a>
+{% endif %}
+
+{% if perms.main.delete_news %}
+<a href={% url 'new.delete' pk=new.pk %}>Удалить</a>
+{% endif %}
+</div>
+
+
+<div class="comments">
+<h2>Коментарии</h2>
+{% for comment in coments %}
+
+<div class="comment">
+<p class="name">{{ comment.user.get_username }}</p>
+<p class="text">{{ comment.text }}</p>
+<p class="time">{{ comment.pubtime }}</p>
+
+{% if perms.main.delete_coments %}
+<a href={% url 'coment.delete' pk=comment.pk %}>Удалить коментарий</a>
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+
+{% if perms.main.add_coments %}
+<form action="" method="post">
+{% csrf_token %}
+{{ coment_form.as_p }}
+<input type="submit" value="Коментировать">
+</form>
+{% endif %}
+
+</div>
+
+{% endblock %}
+<img src="/static/images/logo.png" class="logo" alt="logo">
+
+<h1><a href="{% url "main" %}">Новости</a></h1>
+
+<div class="login">
+{% if not user.is_authenticated %}
+<a href="{% url "login" %}">Войти</a>
+<a href="{% url "register" %}">Регистрация</a>
+{% else %}
+<span>{{ user.username }}</span>
+<a href="{% url "logout" %}">Выход</a>
+{% endif %}
+
+</div>
+<div class="info">
+
+
+<figure class="logo">
+<img src="/static/images/logo.png">
+<figcaption class="copy">
+&copy; 2018 ЗАО "Крутая компания"
+</figcaption>
+</figure>
+
+<small>
+Свидетельство о регистрации №123456789 от 01.01.2000г.<br>
+Лицензия на розничную торговлю №00000/00000 от 01.01.2000г.<br>
+Дата включения в торговый реестр – 01.01.2000г.
+</small>
+
+<div class="contact">
+
+<address>
+emal: mega@cool.net<br>
+MTC: +375 11 111 11 11<br>
+VECOME: +375 22 222 22 22<br>
+LIFE: +375 33 333 33 33
+</address>
+
+</div>
+
+</div>
+{% extends "base.html" %}
+
+{% block title %} {{ new.title }} {% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit">
+</form>
+
+{% endblock %}
